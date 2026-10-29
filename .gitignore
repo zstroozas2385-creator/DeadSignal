@@ -1,0 +1,46 @@
+# Unity generated folders - never commit these (huge, and Unity rebuilds them)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDE / OS files
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.user
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.DS_Store
+Thumbs.db
+
+# Build output
+*.apk
+*.aab
+*.unitypackage
+crashlytics-build.properties
+
+# Your gameplay video - upload it separately, don't bloat the repo
+*.mp4
+*.mov
+
+# Visual Studio solution file Unity 6 generates
+*.slnx
+
+# One-time project setup tool and its notes (not part of the game)
+/Assets/Editor/
+/Assets/Editor.meta
+SETUP_GUIDE.md

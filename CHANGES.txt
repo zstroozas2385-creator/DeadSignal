@@ -1,0 +1,85 @@
+DEAD SIGNAL - Changes from the One-Pager
+Zachary Stroozas - CS583 Individual 2D Project
+
+Art and sound: all sprites were drawn procedurally in code and all sound effects were synthesized
+(no downloaded assets), so the look and sound are original to this project.
+
+KEPT FROM THE DESIGN
+- Player explores a dark, damaged space station with a glowing signal orb.
+- WASD/arrows to move, Space to pulse, Escape to pause.
+- Pulse reveals nearby walls, equipment, survivors and enemies, but also alerts enemies.
+- 5 survivors, 2 enemy types, 1 escape pod, 1 level, energy meter, survivor counter, objective text, win/lose screens.
+- Sound effects only, no background music.
+- Win: rescue all 5 survivors and reach the pod. Lose: energy hits 0 or too much damage.
+
+CHANGES / DETAILS ADDED DURING DEVELOPMENT
+1. Pulse "hearing" vs "seeing": a pulse reveals 7 tiles around you, but enemies hear it up to 12 tiles away.
+   This makes the core twist sharper, because the signal always gives away more than it shows you.
+2. Reveal wave: objects light up as the expanding ring reaches them instead of all at once.
+3. Station memory: walls and survivors you have already revealed stay faintly visible. Enemies do NOT stay visible.
+   This was added to solve the "make the dark readable" challenge from the one-pager.
+4. Small passive glow around the orb so the player is never 100% blind right next to walls.
+5. Energy drains slowly over time as well as per pulse, so the energy lose condition actually matters
+   even for a player who never pulses.
+6. Health = 3 hits, with a short invulnerability blink and screen shake after each hit. After landing a hit,
+   an enemy freezes for 1.5 seconds and lights up so the player can see what hit them and escape (added after
+   playtesting showed unseen enemies could chain-hit a player who stood still).
+7. Enemy types got specific behaviors:
+   - Hunter (red): dormant and blind. Sprints to the location of any pulse it hears, searches, then goes dormant again.
+   - Drifter (purple): wanders on its own, chases if it sees you (walls block its sight), and investigates pulses.
+   Enemies use grid pathfinding (breadth-first search) so they route around walls.
+8. "Enemy movement/warning sound" became a proximity alarm that beeps faster as the nearest enemy gets closer.
+   This gives the player an audio-only way to sense danger without pulsing.
+9. Doors from the art list became open doorways (no door mechanic) to keep scope manageable.
+10. Escape pod is locked (with a message and buzz) until all survivors are rescued (see #20 for the drop-off update). It then powers on, stays
+    visible, and plays an activation + launch sequence before the win screen.
+11. The level is built from a text file (Assets/Levels/Level1.txt) so the layout is easy to edit and tune.
+
+ROUND 2 - ADDED AFTER PLAYTESTING (the game felt too easy)
+12. The player is now an astronaut (a crewmate of the 5 missing survivors) carrying the signal orb,
+    instead of a floating orb.
+13. Rescued survivors follow the player in a line (each one walks along the player's breadcrumb trail).
+14. Enemies can snatch survivors out of the line. A snatched survivor runs back to where it was found
+    and has to be rescued again, so a long line is a liability you have to protect.
+15. Each survivor in the line slows the player by 5%. With all 5, the player is slower than a Hunter.
+16. Powering on the escape pod sets off a station alarm. Every Hunter rushes to the pod and patrols around it,
+    turning the ending into a final sneak/sprint.
+17. Restless Hunters: after the 4th pulse, Hunters no longer go back to sleep. They prowl the station instead,
+    which punishes spamming the pulse.
+18. Rebalance: pulse cost 7 -> 10 energy, passive drain 0.6 -> 0.7 per second, each rescue gives back
+    20 energy, and a third Drifter was added (2 Hunters, 3 Drifters).
+19. New sounds: station alarm and survivor-lost wail.
+
+ROUND 3 - ADDED AFTER PLAYTESTING (a 5-survivor line was too hard to protect)
+20. The escape pod is now also a safe drop-off point. Touching it with survivors following drops them all
+    off, and survivors inside the pod are safe for good (they can't be snatched again). The player can bring
+    survivors back in small groups. The alarm now goes off when the last survivor is found, so the final
+    trip back to the pod is still a race past the Hunters. The pod launches when all 5 are safe inside.
+21. HUD now shows "Safe in pod" and "Following you" counts, and the red bar is labeled HEALTH.
+
+ROUND 4 - POLISH AND SURVIVABILITY
+22. Health is now 100 points instead of 3 hits. Enemies deal 34 damage, so it is still 3 hits from full
+    (difficulty unchanged). The HUD shows the exact number next to the health bar.
+23. Health packs: 4 medkits spawn on random floor tiles at the start (never right next to the player), and
+    another spawns every 40 seconds (max 4 on the map). Each heals 15 health (15% of max). They are hidden in
+    the dark like everything else, so finding them means risking a pulse. They aren't used up at full health.
+24. Title screen with the game name, a one-line story, controls, and Start/Quit buttons. Restarting after a
+    win or loss skips it.
+25. Run timer at the top of the screen. The win screen shows your time and your best time (saved between runs).
+26. Low-energy signal hum: a looping static/electrical hum that is silent above 50% energy, then gets louder,
+    lower-pitched, and more distorted as the signal dies. This is gameplay-tied audio (it tells you how close
+    you are to losing), not background music.
+27. New sounds: heal chime and signal hum loop.
+
+ROUND 5 - DIFFICULTY PASS (full runs were too hard to beat)
+28. Enemies deal 25 damage instead of 34 (4 hits from full health instead of 3).
+29. After landing a hit, enemies freeze for 2.5s instead of 1.5s, and the player is invulnerable for 2s
+    instead of 1.5s, so there is a real window to escape instead of getting chain-hit.
+30. Energy: pulse cost 10 -> 7, passive drain 0.7 -> 0.5 per second.
+31. Hunters become restless after 6 pulses instead of 4.
+32. Hunter speed 3.4 -> 3.1 (still close to a player leading a full line). Drifter chase speed 2.8 -> 2.5,
+    Drifter sight range 4.5 -> 4 tiles.
+
+ROUND 6 - TIME LIMIT
+33. The run timer is now a 3:00 countdown. The timer turns red with a warning alarm at 30 seconds left, and
+    the player loses if it reaches 0:00. The win screen still shows how long the run took and the best time.
